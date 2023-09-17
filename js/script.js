@@ -37,8 +37,26 @@ buttons.forEach((button) => {
 		const targetComputerDetail = document.querySelector(
 			".results .computer .detail",
 		);
+		const targetResultTotal = document.querySelector(".results .result .total");
+		const targetResultDetail = document.querySelector(
+			".results .result .detail",
+		);
 		currentRoundMessage = playRound(event.target.id, getComputerChoice());
 		targetRoundMessage.textContent = currentRoundMessage;
+
+		targetPlayerTotal.textContent = `Player Score: ${playerScore}`;
+		targetComputerTotal.textContent = `Computer Score: ${computerScore}`;
+		targetResultTotal.textContent = `${
+			playerScore > computerScore
+				? "Player"
+				: computerScore > playerScore
+				? "Computer"
+				: "No one"
+		} is winning!`;
+
+		targetPlayerDetail.innerHTML += `${currentResult}: ${currentPlayerChoice}<br />`;
+		targetComputerDetail.innerHTML += `${currentComputerChoice}<br />`;
+		targetResultDetail.innerHTML += `You ${currentResult}!!<br />`;
 	});
 });
 
