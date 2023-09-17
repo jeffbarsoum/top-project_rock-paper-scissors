@@ -91,6 +91,6 @@ function game() {
 	);
 }
 
-game();
+// game();
 
 console.log("Hello Worldy!");
