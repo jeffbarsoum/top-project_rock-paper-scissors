@@ -14,13 +14,31 @@ const choiceWinners = [
 // set score for game up here, game() will update this
 let playerScore = 0;
 let computerScore = 0;
-const numberOfRounds = 5;
+
+let currentPlayerChoice = "";
+let currentComputerChoice = "";
+let currentResult = "";
+let currentRoundMessage = "";
+// const numberOfRounds = 5;
 
 const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
 	button.addEventListener("click", (event) => {
-		playRound(button.id, getComputerChoice());
+		console.log(event);
+		const targetRoundMessage = document.querySelector(".current-game");
+		const targetPlayerTotal = document.querySelector(".results .player .total");
+		const targetPlayerDetail = document.querySelector(
+			".results .player .detail",
+		);
+		const targetComputerTotal = document.querySelector(
+			".results .computer .total",
+		);
+		const targetComputerDetail = document.querySelector(
+			".results .computer .detail",
+		);
+		currentRoundMessage = playRound(event.target.id, getComputerChoice());
+		targetRoundMessage.textContent = currentRoundMessage;
 	});
 });
 
@@ -52,37 +70,34 @@ function getChoiceWinnerArray(choice) {
 function playRound(playerSelection, computerSelection) {
 	const playerChoiceLower = playerSelection.toLowerCase();
 	const choiceWinner = getChoiceWinnerArray(playerChoiceLower);
+	let returnResult = "";
+
+	currentPlayerChoice = cleanedChoice(playerSelection);
+	currentComputerChoice = cleanedChoice(computerSelection);
+
 	if (!choiceWinner) {
-		console.log(
-			"You selected neither Rock, Paper, nor Scissors! You have chosen not to play, and therefore have both lost and not lost...",
-		);
-		return;
+		currentResult = "FORFIET";
+		returnResult = `You selected neither Rock, Paper, nor Scissors!
+      You have chosen not to play,
+      and therefore have both lost and not lost...`;
 	}
 
 	if (playerChoiceLower === computerSelection) {
-		console.log(
-			`You both chose ${cleanedChoice(playerSelection)}! It's a draw!`,
-		);
-		return;
+		currentResult = "DRAW";
+		returnResult = `You both chose ${currentComputerChoice}! It's a draw!`;
 	}
 
 	if (choiceWinner[1] === computerSelection) {
 		playerScore++;
-		console.log(
-			`You Win! ${cleanedChoice(playerSelection)} beats ${cleanedChoice(
-				computerSelection,
-			)}!`,
-		);
-		return;
+		currentResult = "WIN";
+		returnResult = `You Win! ${currentPlayerChoice} beats ${currentComputerChoice}!`;
 	} else {
 		computerScore++;
-		console.log(
-			`You Lose! ${cleanedChoice(computerSelection)} beats ${cleanedChoice(
-				playerSelection,
-			)}!`,
-		);
-		return;
+		currentResult = "LOSE";
+		returnResult = `You Lose! ${currentPlayerChoice} beats ${currentComputerChoice}!`;
 	}
+
+	return returnResult;
 }
 
 function game() {
