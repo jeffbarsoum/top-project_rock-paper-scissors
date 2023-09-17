@@ -1,0 +1,67 @@
+body {
+  text-align: center;
+  font-family:  'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: #98ffa7;
+  color: #000b70;
+}
+
+button {
+  border-style: solid;
+  border-color: #000b70;
+  border-radius: 10px;
+  color: #98ffa7;
+  background-color: #000b70;
+  font-weight: 700;
+  font-size: 24px;
+  padding: 10px;
+  box-shadow: 0 9px #999;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #003cff;
+}
+
+button:active {
+  box-shadow: 0 5px #555;
+  transform: translateY(4px);
+}
+
+.game-buttons,
+.current-game,
+.results {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 10px;
+  color: #000b70;
+}
+
+.results {
+  border-style: solid;
+  border-radius: 10px;
+}
+
+
+.results .player,
+.results .computer,
+.results .result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.total {
+  border-style: solid;
+  border-radius: 10px;
+  color: #98ffa7;
+  background-color: #a593ff;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.results .total.lose {
+background-color: #4a4273;
+}

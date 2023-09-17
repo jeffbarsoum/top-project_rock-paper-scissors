@@ -19,50 +19,54 @@ let currentPlayerChoice = "";
 let currentComputerChoice = "";
 let currentResult = "";
 let currentRoundMessage = "";
-// const numberOfRounds = 5;
 
 const buttons = document.querySelectorAll("button");
 
 buttons.forEach((button) => {
-	button.addEventListener("click", (event) => {
-		console.log(event);
-		const targetRoundMessage = document.querySelector(".current-game");
-		const targetPlayerTotal = document.querySelector(".results .player .total");
-		const targetPlayerDetail = document.querySelector(
-			".results .player .detail",
-		);
-		const targetComputerTotal = document.querySelector(
-			".results .computer .total",
-		);
-		const targetComputerDetail = document.querySelector(
-			".results .computer .detail",
-		);
-		const targetResultTotal = document.querySelector(".results .result .total");
-		const targetResultDetail = document.querySelector(
-			".results .result .detail",
-		);
-		currentRoundMessage = playRound(event.target.id, getComputerChoice());
-		targetRoundMessage.textContent = currentRoundMessage;
-
-		targetPlayerTotal.textContent = `Player Score: ${playerScore}`;
-		targetComputerTotal.textContent = `Computer Score: ${computerScore}`;
-		targetResultTotal.textContent = `${
-			playerScore > computerScore
-				? "Player"
-				: computerScore > playerScore
-				? "Computer"
-				: "No one"
-		} is winning!`;
-
-		targetPlayerDetail.innerHTML += `${currentResult}: ${currentPlayerChoice}<br />`;
-		targetComputerDetail.innerHTML += `${currentComputerChoice}<br />`;
-		targetResultDetail.innerHTML += `You ${currentResult}!!<br />`;
-	});
+	button.addEventListener("click", drawResults);
 });
 
 /////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////
+
+function drawResults(event) {
+	console.log(event);
+	const targetRoundMessage = document.querySelector(".current-game");
+	const targetPlayerTotal = document.querySelector(".results .player .total");
+	const targetPlayerDetail = document.querySelector(".results .player .detail");
+	const targetComputerTotal = document.querySelector(
+		".results .computer .total",
+	);
+	const targetComputerDetail = document.querySelector(
+		".results .computer .detail",
+	);
+	const targetResultTotal = document.querySelector(".results .result .total");
+	const targetResultDetail = document.querySelector(".results .result .detail");
+	currentRoundMessage = playRound(event.target.id, getComputerChoice());
+	targetRoundMessage.textContent = currentRoundMessage;
+
+	targetPlayerTotal.textContent = `Player Score: ${playerScore}`;
+	targetComputerTotal.textContent = `Computer Score: ${computerScore}`;
+	targetResultTotal.textContent = `${
+		playerScore > computerScore
+			? "Player"
+			: computerScore > playerScore
+			? "Computer"
+			: "No one"
+	} is winning!`;
+
+	targetPlayerDetail.innerHTML += `${currentResult}: ${currentPlayerChoice}<br />`;
+	targetComputerDetail.innerHTML += `${currentComputerChoice}<br />`;
+	targetResultDetail.innerHTML += `You ${currentResult}!!<br />`;
+
+	// add styling to winner / loser box to change shades if player is losing
+	if (playerScore < computerScore) {
+		targetResultTotal.classList.add("lose");
+	} else {
+		targetResultTotal.classList.remove("lose");
+	}
+}
 
 function cleanedChoice(choice) {
 	const firstCharacter = choice.charAt(0);
@@ -100,12 +104,10 @@ function playRound(playerSelection, computerSelection) {
       and therefore have both lost and not lost...`;
 	}
 
-	if (playerChoiceLower === computerSelection) {
+	if (currentPlayerChoice === currentComputerChoice) {
 		currentResult = "DRAW";
 		returnResult = `You both chose ${currentComputerChoice}! It's a draw!`;
-	}
-
-	if (choiceWinner[1] === computerSelection) {
+	} else if (choiceWinner[1] === computerSelection) {
 		playerScore++;
 		currentResult = "WIN";
 		returnResult = `You Win! ${currentPlayerChoice} beats ${currentComputerChoice}!`;
@@ -117,25 +119,3 @@ function playRound(playerSelection, computerSelection) {
 
 	return returnResult;
 }
-
-function game() {
-	// call playRound 5 times
-	// keep score, report winner w/ console.log
-	let timesPlayed = 0;
-
-	while (timesPlayed < numberOfRounds) {
-		const playerChoice = prompt("Rock? Paper? Or Scissors??");
-		playRound(playerChoice, getComputerChoice());
-		timesPlayed++;
-	}
-
-	console.log(
-		`Your final score is ${playerScore}. The computer's score is ${computerScore}. ${
-			playerScore > computerScore ? "You Win!" : ""
-		}`,
-	);
-}
-
-// game();
-
-console.log("Hello Worldy!");
