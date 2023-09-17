@@ -16,6 +16,18 @@ let playerScore = 0;
 let computerScore = 0;
 const numberOfRounds = 5;
 
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+	button.addEventListener("click", (event) => {
+		playRound(button.id, getComputerChoice());
+	});
+});
+
+/////////////////////////////////////////////////////////////////////
+// Functions
+/////////////////////////////////////////////////////////////////////
+
 function cleanedChoice(choice) {
 	const firstCharacter = choice.charAt(0);
 	return firstCharacter.toUpperCase() + choice.slice(1).toLowerCase();
